@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- jQuery library inclusion -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Title of the document -->
+    <title>Assessment</title>
+
+    <!-- Internal stylesheet -->
+    <style>
+        /* General styles for the body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Styles for the search form */
+        #searchForm {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Styles for labels */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: x-large;
+        }
+
+        /* Styles for select and input elements */
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            font-size: large;
+        }
+
+        /* Styles for the search button */
+        button {
+            background-color: #1276f8;
+            color: white;
+            padding: 10px 40px;
+            border: none;
+            cursor: pointer;
+            font-size: large;
+            border-radius: 20px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 400px) {
+            #searchForm {
+                padding: 10px;
+            }
+        }
+
+        /* Styles for the result paragraph */
+        p {
+            position: relative;
+            text-align: center;
+            text-decoration: underline;
+            font-size: large;
+            color: gray;
+        }
+
+        /* Gallery styles */
+        div.gallery {
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Global styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Styles for responsive gallery */
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 33.33%; /* 3 images in a row for desktop */
+        }
+
+        /* Media query for tablets */
+        @media only screen and (max-width: 700px) {
+            .responsive {
+                width: 50%; /* 2 images in a row for tablets */
+                margin: 6px 0;
+            }
+        }
+
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%; /* 1 image in a row for mobile */
+            }
+        }
+
+        /* Clearfix for floating elements */
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Styles for images */
+        img {
+            aspect-ratio: 4/3;
+            height: auto;
+            width: 100%;
+        }
+    </style>
+
+    <!-- JavaScript code -->
+    <script>
+        // Categories array containing products
+        var Categories = [
+            {
+                name: "Health and Wellness",
+                products: [
+                    "Walkers",
+                    "Adjustable walking canes",
+                    "Mobility scooters"
+                ]
+            },
+            {
+                name: "Home Safety and Comfort",
+                products: [
+                    "Grab bars for bathrooms",
+                    "Non-slip bath mats",
+                    "Raised toilet seats"
+                ]
+            },
+            {
+                name: "Home Accessibility",
+                products: [
+                    "Adaptive kitchen utensils",
+                    "Jar openers",
+                    "Reacher grabber tools"
+                ]
+            },
+            {
+                name: "Technology and Gadgets",
+                products: [
+                    "Senior-friendly smartphones",
+                    "Tablet computers with simplified interfaces",
+                    "Smart home devices"
+                ]
+            },
+            {
+                name: "Comfort and Leisure",
+                products: [
+                    "Memory foam pillows",
+                    "Adjustable bed wedges",
+                    "Electric blankets"
+                ]
+            }
+        ];
+
+        // Function to update products based on selected category
+        function updateProducts(paramater) {
+            var product = document.getElementById("pro");
+
+            if (paramater == "Select Category") {
+                // Remove all options if "Select Category" is chosen
+                while (product.firstChild) {
+                    product.removeChild(product.firstChild);
+                }
+                var option = document.createElement('option');
+                option.value = "Select Product";
+                option.text = "Select Product";
+                product.appendChild(option);
+            }
+
+            // Loop through categories and update product options accordingly
+            for (var i = 0; i < Categories.length; i++) {
+                if (paramater == Categories[i].name) {
+                    // Remove all options
+                    while (product.firstChild) {
+                        product.removeChild(product.firstChild);
+                    }
+
+                    // Add options based on the selected category
+                    for (var j = 0; j < Categories[i].products.length; j++) {
+                        var option = document.createElement('option');
+                        option.value = Categories[i].products[j];
+                        option.text = Categories[i].products[j];
+                        product.appendChild(option);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="updateProducts('Select Category')">
+    <!-- Search form -->
+    <form id="searchForm">
+        <label for="cat">Category:</label>
+        <!-- Dropdown for selecting category -->
+        <select name="cat" id="cat" onchange="updateProducts(this.value)">
+            <option value="Select Category">Select Category</option>
+            <option value="Health and Wellness">Health and Wellness</option>
+            <option value="Home Safety and Comfort">Home Safety and Comfort</option>
+            <option value="Home Accessibility">Home Accessibility</option>
+            <option value="Technology and Gadgets">Technology and Gadgets</option>
+            <option value="Comfort and Leisure">Comfort and Leisure</option>
+        </select>
+        <label for="pro">Product:</label>
+        <!-- Dropdown for selecting product -->
+        <select name="pro" id="pro"></select>
+        <!-- Button to trigger search function -->
+        <button type="button" onclick="search()">Search</button>
+    </form>
+
+    <!-- Container for displaying search results -->
+    <div id="result"></div>
+
+    <!-- JavaScript code for handling search functionality -->
+    <script>
+        function search() {
+            // Get form data
+            var formData = $("#searchForm").serialize();
+
+            // Send AJAX request to "template.php"
+            $.ajax({
+                type: "GET",
+                url: "template.php",
+                data: formData,
+                success: function (response) {
+                    // Display the result in the 'result'
+
+                    $("#result").html(response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
